@@ -39,13 +39,17 @@ def gen_qq_numbers(m, n, k, output):
 
         if len(s) % block == 0:
             t1 = time()
-            processed += uniprocess(s, output)
+            try:
+                processed += uniprocess(s, output)
+            except:
+                print('Memory Error! Try again!')
+                block = int(block*0.9)
             s = set()
             print('processed: {}\tused: {}s\tsum: {}s'.format(
                         processed,
                         round(time() - t1, 2),
                         round(time()-t0, 2)))
-            if (k - processed) < block*2:
+            if (k - processed) < block*1.5:
                 endflag = True
                 break
 
@@ -56,7 +60,14 @@ def gen_qq_numbers(m, n, k, output):
         last = k - processed
         while len(s) != lastpad:
             s.add(str(getrandbits(lenbits))+'\n')
-        processed += uniprocess(s, output, end=last)
+        try:
+            processed += uniprocess(s, output, end=last)
+        except:
+            print('Memory Error! Try again!')
+            tmpSet = set([s.pop() for i in range(int(len(s)/2))])
+            processed += uniprocess(s, output, end=int(last/2))
+            last = k - processed
+            processed += uniprocess(tmpSet, output, end=last)
         print('''processed: {}\tused: {}s\tsum: {}s'''.format(
             processed,
             round(time() - t1, 2),
