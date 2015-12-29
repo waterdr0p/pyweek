@@ -6,7 +6,7 @@ pep8 qq_getrandbits.py > pep8.txt
 
 #优化结论
 len函数：len(largeSet) 在海量循环时，并不会比计数器更消耗资源，且代码量更少
-集合操作：海量数据集合操作时，占用内存不能太小，导致频繁IO,性能下降; 也不能太大，导致集会计算性能下降
+集合操作：海量数据集合操作时，占用内存不能太小，导致频繁IO,性能下降; 也不能太大，导致集合计算性能下降
 file.write(): wf.write(''.join(list(inputX)[:end])) 比wf.writelines(list(inputX)[:end]))远远优化的多
 
 #python3 64bit window 运行最佳结果
@@ -36,7 +36,7 @@ seconds used:           437.18s
 #交并差算法描述
 交：两个文件使用双重while循环，遍历s.update(set(rf0.readlines(size)) & set(rf1.readlines(size)))来处理交集，内层循环完毕写文件
 差：两个文件使用双重while循环，
-外层循环block0 = set(rf0.readlines(size))
-遍历block1 = set(rf1.readlines(size)))
+  外层循环block0 = set(rf0.readlines(size))
+  遍历block1 = set(rf1.readlines(size)))
  block0 -= block1 来处理差集，内层循环完毕写文件
 并：difference.txt+b.txt直接合并
